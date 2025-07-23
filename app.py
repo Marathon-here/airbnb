@@ -40,7 +40,6 @@
 # if __name__=="__main__":
 #     app.run()
 
-
 from flask import Flask, render_template, request
 import joblib
 import pandas as pd
@@ -61,37 +60,42 @@ def index():
 @app.route("/predict", methods=["POST"])
 def home():
     if request.method == "POST":
-        # Get input values from form
-        city = request.form.get("City")
-        room_type = request.form.get("RoomType")
-        bedrooms = int(request.form.get("Bedrooms"))
-        bathrooms = int(request.form.get("Bathrooms"))
-        guests = int(request.form.get("GuestsCapacity"))
-        wifi = int(request.form.get("HasWifi"))
-        ac = int(request.form.get("HasAC"))
-        distance = float(request.form.get("DistanceFromCityCenter"))
+        try:
+            # Get input values from form
+            city = request.form.get("City")
+            room_type = request.form.get("RoomType")
+            bedrooms = int(request.form.get("Bedrooms"))
+            bathrooms = int(request.form.get("Bathrooms"))
+            guests = int(request.form.get("GuestsCapacity"))
+            wifi = int(request.form.get("HasWifi"))
+            ac = int(request.form.get("HasAC"))
+            distance = float(request.form.get("DistanceFromCityCenter"))
 
-        # Create a one-row DataFrame for prediction
-        final_data = pd.DataFrame([[city, room_type, bedrooms, bathrooms, guests, wifi, ac, distance]],
-                                  columns=['City', 'RoomType', 'Bedrooms', 'Bathrooms', 'GuestsCapacity', 'HasWifi', 'HasAC', 'DistanceFromCityCenter'])
+            # Create a one-row DataFrame for prediction
+            final_data = pd.DataFrame([[city, room_type, bedrooms, bathrooms, guests, wifi, ac, distance]],
+                                      columns=['City', 'RoomType', 'Bedrooms', 'Bathrooms', 'GuestsCapacity', 'HasWifi', 'HasAC', 'DistanceFromCityCenter'])
 
-        # Make prediction
-        prediction = model.predict(final_data)[0]
+            # Make prediction
+            prediction = model.predict(final_data)[0]
 
-        # Create user data to show on the UI
-        user_data = {
-            "City": city,
-            "RoomType": room_type,
-            "Bedrooms": bedrooms,
-            "Bathrooms": bathrooms,
-            "GuestsCapacity": guests,
-            "HasWifi": wifi,
-            "HasAC": ac,
-            "DistanceFromCityCenter": distance
-        }
+            # Create user data to show on the UI
+            user_data = {
+                "City": city,
+                "RoomType": room_type,
+                "Bedrooms": bedrooms,
+                "Bathrooms": bathrooms,
+                "GuestsCapacity": guests,
+                "HasWifi": wifi,
+                "HasAC": ac,
+                "DistanceFromCityCenter": distance
+            }
 
-        # Pass prediction and user data to template
-        return render_template("index.html", predict=prediction, user_data=user_data)
+            # Pass prediction and user data to template
+            return render_template("index.html", predict=prediction, user_data=user_data)
+
+        except Exception as e:
+            print("Prediction error:", e)
+            return render_template("index.html", predict="⚠️ Prediction failed. Please check inputs or model compatibility.")
 
     else:
         return render_template("index.html")
