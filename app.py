@@ -6,7 +6,9 @@
 # app = Flask(__name__)
 
 # #load the model from pickle file
-# model = joblib.load("airbnb.pkl")
+# import os
+# model_path = os.path.join(os.path.dirname(__file__), "airbnb.pkl")
+# model = joblib.load(model_path)
 
 
 # @app.route("/")
@@ -39,15 +41,16 @@
 #     app.run()
 
 
-# Backend ---> Takes data from html and sends back to html
 from flask import Flask, render_template, request
 import joblib
 import pandas as pd
+import os
 
 app = Flask(__name__)
 
 # Load the trained model
-model = joblib.load("airbnb.pkl")
+model_path = os.path.join(os.path.dirname(__file__), "airbnb.pkl")
+model = joblib.load(model_path)
 
 # Route for homepage — shows the input form
 @app.route("/")
@@ -59,28 +62,38 @@ def index():
 def home():
     if request.method == "POST":
         # Get input values from form
-        data = {
-            "City": request.form.get("City"),
-            "RoomType": request.form.get("RoomType"),
-            "Bedrooms": int(request.form.get("Bedrooms")),
-            "Bathrooms": int(request.form.get("Bathrooms")),
-            "GuestsCapacity": int(request.form.get("GuestsCapacity")),
-            "HasWifi": int(request.form.get("HasWifi")),
-            "HasAC": int(request.form.get("HasAC")),
-            "DistanceFromCityCenter": int(request.form.get("DistanceFromCityCenter"))
+        city = request.form.get("City")
+        room_type = request.form.get("RoomType")
+        bedrooms = int(request.form.get("Bedrooms"))
+        bathrooms = int(request.form.get("Bathrooms"))
+        guests = int(request.form.get("GuestsCapacity"))
+        wifi = int(request.form.get("HasWifi"))
+        ac = int(request.form.get("HasAC"))
+        distance = float(request.form.get("DistanceFromCityCenter"))
+
+        # Create a one-row DataFrame for prediction
+        final_data = pd.DataFrame([[city, room_type, bedrooms, bathrooms, guests, wifi, ac, distance]],
+                                  columns=['City', 'RoomType', 'Bedrooms', 'Bathrooms', 'GuestsCapacity', 'HasWifi', 'HasAC', 'DistanceFromCityCenter'])
+
+        # Make prediction
+        prediction = model.predict(final_data)[0]
+
+        # Create user data to show on the UI
+        user_data = {
+            "City": city,
+            "RoomType": room_type,
+            "Bedrooms": bedrooms,
+            "Bathrooms": bathrooms,
+            "GuestsCapacity": guests,
+            "HasWifi": wifi,
+            "HasAC": ac,
+            "DistanceFromCityCenter": distance
         }
 
-        # Create a one-row DataFrame from the input
-        df = pd.DataFrame([data])
+        # Pass prediction and user data to template
+        return render_template("index.html", predict=prediction, user_data=user_data)
 
-        # Predict price using the model
-        prediction = model.predict(df)[0]
-
-        # Show the form again and display the prediction
-        return render_template("index.html", predict=prediction)
-    
     else:
-        # If method is not POST, just show the form
         return render_template("index.html")
 
 # Start the Flask development server

@@ -1,72 +1,74 @@
-<!-- Frontend (gives data to backend that is flask here and takes back) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Airbnb Price Predictor</title>
+    <link rel="stylesheet" href="../static/index.css">
 </head>
 <body>
 
-    <!-- Form sends data to /predict route using POST method -->
-    <form action="/predict" method="post">
-
+    <div class="header">
+        <img src="../static/logo.png" alt="Logo" class="logo">
         <h1>Airbnb Price Predictor</h1>
+    </div>
 
-        <!-- City dropdown -->
+    <form action="/predict" method="post">
         <label>Choose a city:</label>
         <select name="City" required>
             <option value="Mumbai">Mumbai</option>
             <option value="Bengaluru">Bengaluru</option>
             <option value="Delhi">Delhi</option>
             <option value="Goa">Goa</option>
-        </select><br><br>
+        </select>
 
-        <!-- Room type dropdown -->
         <label>Choose a Room Type:</label>
         <select name="RoomType" required>
             <option value="Shared room">Shared room</option>
             <option value="Entire home/apt">Entire home/apt</option>
             <option value="Private room">Private room</option>
-        </select><br><br>
+        </select>
 
-        <!-- Bedrooms input -->
         <label>Number of Bedrooms:</label>
-        <input type="number" name="Bedrooms" min="1" max="10" placeholder="Bedrooms" required><br><br>
+        <input type="number" name="Bedrooms" min="1" max="10" placeholder="Bedrooms" required>
 
-        <!-- Bathrooms input -->
         <label>Number of Bathrooms:</label>
-        <input type="number" name="Bathrooms" min="1" max="5" placeholder="Bathrooms" required><br><br>
+        <input type="number" name="Bathrooms" min="1" max="5" placeholder="Bathrooms" required>
 
-        <!-- Guests capacity input -->
         <label>Guests Capacity:</label>
-        <input type="number" name="GuestsCapacity" min="1" max="10" placeholder="GuestsCapacity" required><br><br>
+        <input type="number" name="GuestsCapacity" min="1" max="10" placeholder="Guests Capacity" required>
 
-        <!-- Wifi option -->
-        <label>Has Wifi?:</label>
+        <label>Has Wifi?</label>
         <select name="HasWifi" required>
             <option value="0">No</option>
             <option value="1">Yes</option>
-        </select><br><br>
+        </select>
 
-        <!-- AC option -->
-        <label>Has AC?:</label>
+        <label>Has AC?</label>
         <select name="HasAC" required>
             <option value="0">No</option>
             <option value="1">Yes</option>
-        </select><br><br>
+        </select>
 
-        <!-- Distance from city center input -->
         <label>Distance From City Center:</label>
-        <input type="number" name="DistanceFromCityCenter" min="1" max="100" placeholder="e.g. 10" required><br><br>
+        <input type="number" name="DistanceFromCityCenter" min="1" max="100" placeholder="e.g. 10" required>
 
-        <!-- Submit button -->
         <button type="submit">Submit</button>
     </form>
 
-    <!-- Display predicted price if available -->
     {% if predict %}
-        <h2>{{predict}}</h2>
+        <div class="results">
+            <h2>Prediction Result</h2>
+            <p><strong>City:</strong> {{ user_data.City }}</p>
+            <p><strong>Room Type:</strong> {{ user_data.RoomType }}</p>
+            <p><strong>Bedrooms:</strong> {{ user_data.Bedrooms }}</p>
+            <p><strong>Bathrooms:</strong> {{ user_data.Bathrooms }}</p>
+            <p><strong>Guests Capacity:</strong> {{ user_data.GuestsCapacity }}</p>
+            <p><strong>Has Wifi:</strong> {{ 'Yes' if user_data.HasWifi == 1 else 'No' }}</p>
+            <p><strong>Has AC:</strong> {{ 'Yes' if user_data.HasAC == 1 else 'No' }}</p>
+            <p><strong>Distance from City Center:</strong> {{ user_data.DistanceFromCityCenter }} km</p>
+            <h3>Predicted Price per Night: ₹{{ predict }}</h3>
+        </div>
     {% endif %}
 
 </body>

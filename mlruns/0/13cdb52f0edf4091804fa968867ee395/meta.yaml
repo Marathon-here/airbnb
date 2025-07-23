@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/0/13cdb52f0edf4091804fa968867ee395/artifacts
+end_time: 1753277705074
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 13cdb52f0edf4091804fa968867ee395
+run_name: marvelous-chimp-973
+run_uuid: 13cdb52f0edf4091804fa968867ee395
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753277701314
+status: 3
+tags: []
+user_id: Raksh

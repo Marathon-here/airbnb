@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/0/05a56a26eaee4871a6b008573c51e59e/artifacts
+end_time: 1753276597155
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 05a56a26eaee4871a6b008573c51e59e
+run_name: luxuriant-panda-903
+run_uuid: 05a56a26eaee4871a6b008573c51e59e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753276593060
+status: 3
+tags: []
+user_id: Raksh
