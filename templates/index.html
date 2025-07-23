@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/predict" method="post"> <!--add the url used in your fask in the action,ensure both should to same to establsih connection-->
+        <h1>Airbnb Price</h1>
+        <label for="City">Choose a City</label>
+        <select id="City" name="City"> #we need to give name to access the html tages with the current framework(flask...)
+            <option value="Bangalore"> Bangalore </option>
+            <option value="Mumbai"> Mumbai </option>
+            <option value="Goa"> Goa </option>
+            <option value="Delhi">Delhi </option>
+        </select><br><br>   <!--break here to go nextline-->
+
+
+        <label for="Room">Choose RoomType</label>
+        <select name="RoomType">
+            <option value="Shared room"> Shared room </option>
+            <option value="Entire home/apt"> Entire home/apt </option>
+            <option value="Private room"> Private room </option>
+        </select><br><br>
+
+        
+        <label for="Bedroom">number of Bedrooms </label> 
+        <input type="number" name = "Bedrooms" min = "1" max="5" placeholder="Bedroom"><br><br>
+
+        <label for="Bathrooms">number of Bathrooms </label> 
+        <input type="number" name = "Bathrooms" min = "1" max="10" placeholder="Bathroom"><br><br>
+
+        <label for="guests">Guests Capacity</label>
+        <input type="number" name = "GuestsCapacity" min = "1" max = "10" placeholder="guests"><br><br>
+
+        <label for="wifi">HasWifi</label>
+        <select name="HasWifi" id="Y">
+            <option value="1">yes</option>
+            <option value="0">No</option>
+        </select><br><br>
+
+        <label for="HasAC">HasAC</label>
+        <select name="HasAC" id="Y">
+            <option value="1">yes</option>
+            <option value="0">No</option>
+        </select><br><br>
+
+        
+        <label for="Distance">Distance</label>
+        <input type="number" name = "DistanceFromCityCenter" min="10" max="50" placeholder="Distance"><br><br>
+
+        <button type="submit">submit</button>
+
+    </form>
+
+    {% if predict %}
+    <h2>{{predict}}</h2>
+    {% endif %}
+
+</body>
+</html>
