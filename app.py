@@ -40,12 +40,23 @@
 # if __name__=="__main__":
 #     app.run()
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import joblib
 import pandas as pd
 import os
 
+# Optional: For HTTPS headers
+from flask_talisman import Talisman
+
 app = Flask(__name__)
+Talisman(app, content_security_policy=None)  # Adds security headers (XSS protection, HSTS, etc.)
+
+# Enforce HTTPS redirect (especially on Render or other cloud platforms)
+@app.before_request
+def redirect_to_https():
+    if request.headers.get("X-Forwarded-Proto", "http") != "https":
+        url = request.url.replace("http://", "https://", 1)
+        return redirect(url, code=301)
 
 # Load model
 model_path = os.path.join(os.path.dirname(__file__), "airbnb.pkl")
@@ -90,4 +101,3 @@ def predict():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
