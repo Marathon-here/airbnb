@@ -49,8 +49,7 @@ import os
 from flask_talisman import Talisman
 
 app = Flask(__name__)
-Talisman(app, content_security_policy=None)  # Adds security headers (XSS protection, HSTS, etc.)
-
+Talisman(app)
 # Enforce HTTPS redirect (especially on Render or other cloud platforms)
 @app.before_request
 def redirect_to_https():
