@@ -1,61 +1,72 @@
+<!-- Frontend (gives data to backend that is flask here and takes back) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Airbnb Price Predictor</title>
 </head>
 <body>
-    <form action="/predict" method="post"> <!--add the url used in your fask in the action,ensure both should to same to establsih connection-->
-        <h1>Airbnb Price</h1>
-        <label for="City">Choose a City</label>
-        <select id="City" name="City"> #we need to give name to access the html tages with the current framework(flask...)
-            <option value="Bangalore"> Bangalore </option>
-            <option value="Mumbai"> Mumbai </option>
-            <option value="Goa"> Goa </option>
-            <option value="Delhi">Delhi </option>
-        </select><br><br>   <!--break here to go nextline-->
 
+    <!-- Form sends data to /predict route using POST method -->
+    <form action="/predict" method="post">
 
-        <label for="Room">Choose RoomType</label>
-        <select name="RoomType">
-            <option value="Shared room"> Shared room </option>
-            <option value="Entire home/apt"> Entire home/apt </option>
-            <option value="Private room"> Private room </option>
+        <h1>Airbnb Price Predictor</h1>
+
+        <!-- City dropdown -->
+        <label>Choose a city:</label>
+        <select name="City" required>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Bengaluru">Bengaluru</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Goa">Goa</option>
         </select><br><br>
 
-        
-        <label for="Bedroom">number of Bedrooms </label> 
-        <input type="number" name = "Bedrooms" min = "1" max="5" placeholder="Bedroom"><br><br>
+        <!-- Room type dropdown -->
+        <label>Choose a Room Type:</label>
+        <select name="RoomType" required>
+            <option value="Shared room">Shared room</option>
+            <option value="Entire home/apt">Entire home/apt</option>
+            <option value="Private room">Private room</option>
+        </select><br><br>
 
-        <label for="Bathrooms">number of Bathrooms </label> 
-        <input type="number" name = "Bathrooms" min = "1" max="10" placeholder="Bathroom"><br><br>
+        <!-- Bedrooms input -->
+        <label>Number of Bedrooms:</label>
+        <input type="number" name="Bedrooms" min="1" max="10" placeholder="Bedrooms" required><br><br>
 
-        <label for="guests">Guests Capacity</label>
-        <input type="number" name = "GuestsCapacity" min = "1" max = "10" placeholder="guests"><br><br>
+        <!-- Bathrooms input -->
+        <label>Number of Bathrooms:</label>
+        <input type="number" name="Bathrooms" min="1" max="5" placeholder="Bathrooms" required><br><br>
 
-        <label for="wifi">HasWifi</label>
-        <select name="HasWifi" id="Y">
-            <option value="1">yes</option>
+        <!-- Guests capacity input -->
+        <label>Guests Capacity:</label>
+        <input type="number" name="GuestsCapacity" min="1" max="10" placeholder="GuestsCapacity" required><br><br>
+
+        <!-- Wifi option -->
+        <label>Has Wifi?:</label>
+        <select name="HasWifi" required>
             <option value="0">No</option>
+            <option value="1">Yes</option>
         </select><br><br>
 
-        <label for="HasAC">HasAC</label>
-        <select name="HasAC" id="Y">
-            <option value="1">yes</option>
+        <!-- AC option -->
+        <label>Has AC?:</label>
+        <select name="HasAC" required>
             <option value="0">No</option>
+            <option value="1">Yes</option>
         </select><br><br>
 
-        
-        <label for="Distance">Distance</label>
-        <input type="number" name = "DistanceFromCityCenter" min="10" max="50" placeholder="Distance"><br><br>
+        <!-- Distance from city center input -->
+        <label>Distance From City Center:</label>
+        <input type="number" name="DistanceFromCityCenter" min="1" max="100" placeholder="e.g. 10" required><br><br>
 
-        <button type="submit">submit</button>
-
+        <!-- Submit button -->
+        <button type="submit">Submit</button>
     </form>
 
+    <!-- Display predicted price if available -->
     {% if predict %}
-    <h2>{{predict}}</h2>
+        <h2>{{predict}}</h2>
     {% endif %}
 
 </body>
