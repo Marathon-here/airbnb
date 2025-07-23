@@ -1,6 +1,5 @@
-setuptools>=42
-Flask==2.3.3
-pandas==2.1.4
+Flask
+pandas
 scikit-learn
 joblib
 gunicorn
