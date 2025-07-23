@@ -3,3 +3,5 @@ pandas
 scikit-learn==1.3.2
 joblib
 gunicorn
+flask-talisman
+
