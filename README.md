@@ -40,6 +40,6 @@ This project showcases an end-to-end machine learning solution to predict Airbnb
 ---
 
 ## 🙋🏻 About Me
-I’m Rakshitha — an aspiring data engineer and backend developer blending machine learning with cloud-first solutions. I love building tools that make intelligent decisions, streamline workflows, and look great while doing it.
+I’m Rakshitha — an aspiring  engineer and backend developer blending machine learning with cloud-first solutions. I love building tools that make intelligent decisions, streamline workflows, and look great while doing it.
 
 
